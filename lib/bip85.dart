@@ -1,8 +1,10 @@
-/// Support for doing something awesome.
+/// BIP85 deterministic entropy derivation library.
 ///
-/// More dartdocs go here.
+/// This library provides functionality to derive deterministic entropy
+/// from master keys according to BIP85 specification.
 library;
 
-export 'src/bip85_base.dart';
-
-// TODO: Export any libraries intended for clients of this package.
+export 'src/bip85_entropy.dart';
+export 'src/errors.dart';
+export 'src/applications.dart';
+export 'package:bip39_mnemonic/bip39_mnemonic.dart';
