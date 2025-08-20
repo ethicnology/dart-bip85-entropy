@@ -8,7 +8,11 @@ environment:
 
 # Add regular dependencies here.
 dependencies:
-  # path: ^1.9.0
+  bip32_keys: ^3.1.1
+  pointycastle: ^3.9.1
+  convert: ^3.1.1
+  bip39_mnemonic: ^4.0.1
+  
 
 dev_dependencies:
   lints: ^6.0.0
