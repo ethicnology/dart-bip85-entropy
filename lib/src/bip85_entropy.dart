@@ -11,6 +11,7 @@ import 'hex.dart' as hex_utils;
 import 'pwd_base64.dart' as pwd_base64;
 import 'pwd_base85.dart' as pwd_base85;
 import 'dice.dart' as dice;
+import 'rsa.dart' as rsa;
 
 class Bip85Entropy {
   static const String _hmacKey = 'bip-entropy-from-k';
@@ -154,5 +155,49 @@ class Bip85Entropy {
     int index,
   ) {
     return dice.deriveDiceRolls(xprvBase58, sides, rolls, index);
+  }
+
+  /// Derives an RSA key pair according to BIP85 specification.
+  ///
+  /// Path format: m/83696968'/828365'/key_bits'/key_index'
+  ///
+  /// [xprvBase58] - Base58 encoded extended private key (master key)
+  /// [keyBits] - RSA key size in bits (typically 1024, 2048, or 4096)
+  /// [keyIndex] - Index for multiple RSA keys of the same size
+  ///
+  /// Returns a [Bip85RsaKeyPair] containing the generated private and public keys
+  static rsa.Bip85RsaKeyPair deriveRsaKeyPair(
+    String xprvBase58,
+    int keyBits,
+    int keyIndex,
+  ) {
+    return rsa.deriveRsaKeyPair(xprvBase58, keyBits, keyIndex);
+  }
+
+  /// Derives an RSA key pair for GPG purposes according to BIP85 specification.
+  ///
+  /// GPG keys use the following scheme:
+  /// - Main key: m/83696968'/828365'/key_bits'/key_index'
+  /// - Sub keys: m/83696968'/828365'/key_bits'/key_index'/sub_key'
+  ///
+  /// Where:
+  /// - key_index is the parent key for CERTIFY capability
+  /// - sub_key 0' is used as the ENCRYPTION key
+  /// - sub_key 1' is used as the AUTHENTICATION key
+  /// - sub_key 2' is usually used as SIGNATURE key
+  ///
+  /// [xprvBase58] - Base58 encoded extended private key (master key)
+  /// [keyBits] - RSA key size in bits
+  /// [keyIndex] - Index for the main GPG key
+  /// [subKey] - Sub-key index (0=ENCRYPTION, 1=AUTHENTICATION, 2=SIGNATURE)
+  ///
+  /// Returns a [Bip85RsaKeyPair] for the specified GPG sub-key
+  static rsa.Bip85RsaKeyPair deriveRsaGpgKeyPair(
+    String xprvBase58,
+    int keyBits,
+    int keyIndex,
+    int subKey,
+  ) {
+    return rsa.deriveRsaGpgKeyPair(xprvBase58, keyBits, keyIndex, subKey);
   }
 }

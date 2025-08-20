@@ -21,6 +21,8 @@ class Bip85Application {
         return WifApplication();
       case 32:
         return XprvApplication();
+      case 828365:
+        return RsaApplication();
       default:
         return CustomApplication._(number: number);
     }
@@ -53,6 +55,10 @@ class WifApplication extends Bip85Application {
 
 class XprvApplication extends Bip85Application {
   const XprvApplication() : super._(number: 32);
+}
+
+class RsaApplication extends Bip85Application {
+  const RsaApplication() : super._(number: 828365);
 }
 
 class CustomApplication implements Bip85Application {
