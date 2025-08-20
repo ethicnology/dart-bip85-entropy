@@ -15,6 +15,8 @@ import 'rsa.dart' as rsa;
 
 class Bip85Entropy {
   static const String _hmacKey = 'bip-entropy-from-k';
+  static const int childNumber = 83696968;
+  static const String pathPrefix = "m/$childNumber'";
 
   /// Derives BIP85 entropy from a master key using a custom path after the application number.
   ///
@@ -38,7 +40,7 @@ class Bip85Entropy {
       final root = bip32.Bip32Keys.fromBase58(xprvBase58);
 
       // Build the full BIP85 path: m/83696968'/app_no'/custom_path
-      final derivationPath = "m/83696968'/${application.number}'/$path";
+      final derivationPath = "$pathPrefix/${application.number}'/$path";
       final derivedKey = root.derivePath(derivationPath);
 
       // Get the private key bytes
