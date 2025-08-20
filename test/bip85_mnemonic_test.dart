@@ -12,7 +12,7 @@ void main() {
         MnemonicLength.words12,
         0,
       );
-      expect(mnemonic.split(' ').length, equals(12));
+      expect(mnemonic.words, equals(12));
       expect(mnemonic, isA<String>());
     });
 
@@ -23,7 +23,7 @@ void main() {
         MnemonicLength.words24,
         0,
       );
-      expect(mnemonic.split(' ').length, equals(24));
+      expect(mnemonic.words, equals(24));
       expect(mnemonic, isA<String>());
     });
 

@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 import 'package:bip32_keys/bip32_keys.dart' as bip32;
 import 'package:bip39_mnemonic/bip39_mnemonic.dart' as bip39;
+
 import 'applications.dart';
 import 'errors.dart';
 import 'utils.dart';
@@ -65,8 +66,8 @@ class Bip85Entropy {
   /// [wordCount] - Number of words (12, 15, 18, 21, 24)
   /// [index] - Index for multiple mnemonics
   ///
-  /// Returns the BIP39 mnemonic string
-  static String deriveMnemonic(
+  /// Returns the BIP39 mnemonic
+  static bip39.Mnemonic deriveMnemonic(
     String xprvBase58,
     bip39.Language language,
     bip39.MnemonicLength length,

@@ -1,7 +1,7 @@
 import 'package:bip85/bip85.dart';
 import 'utils.dart';
 
-String deriveMnemonic(
+Mnemonic deriveMnemonic(
   String xprvBase58,
   Language language,
   MnemonicLength length,
@@ -18,8 +18,7 @@ String deriveMnemonic(
     final truncatedEntropy = entropy.sublist(0, length.bytes);
 
     // Generate mnemonic from entropy
-    final mnemonic = Mnemonic(truncatedEntropy, language);
-    return mnemonic.sentence;
+    return Mnemonic(truncatedEntropy, language);
   } catch (e) {
     throw Bip85Exception('Failed to derive BIP39 mnemonic: $e');
   }
