@@ -35,4 +35,4 @@ jobs:
         uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          slug: ethicnology/dart-bip329-labels
+          slug: ethicnology/dart-bip85-entropy
