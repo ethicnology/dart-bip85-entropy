@@ -55,7 +55,7 @@ class Bip85Application {
 class MnemonicApplication extends Bip85Application {
   const MnemonicApplication() : super._(number: 39);
 
-  static (Language language, MnemonicLength length, int index) parsePath(
+  static ({Language language, MnemonicLength length, int index}) parsePath(
     String path,
   ) {
     final components = Bip85Application.parsePathComponents(
@@ -66,7 +66,7 @@ class MnemonicApplication extends Bip85Application {
     final length = Bip39MnemonicLengthExtension.fromBip85Code(components[1]);
     final index = components[2];
 
-    return (language, length, index);
+    return (language: language, length: length, index: index);
   }
 }
 

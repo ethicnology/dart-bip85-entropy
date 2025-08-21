@@ -7,9 +7,9 @@ void main() {
       const path = "m/83696968'/39'/0'/12'/0'";
       final result = MnemonicApplication.parsePath(path);
 
-      expect(result.$1, equals(Language.english));
-      expect(result.$2, equals(MnemonicLength.words12));
-      expect(result.$3, equals(0));
+      expect(result.language, equals(Language.english));
+      expect(result.length, equals(MnemonicLength.words12));
+      expect(result.index, equals(0));
     });
 
     test('HexApplication parsePath', () {
@@ -63,18 +63,18 @@ void main() {
       const path = "39'/1'/24'/5'";
       final result = MnemonicApplication.parsePath(path);
 
-      expect(result.$1, equals(Language.japanese));
-      expect(result.$2, equals(MnemonicLength.words24));
-      expect(result.$3, equals(5));
+      expect(result.language, equals(Language.japanese));
+      expect(result.length, equals(MnemonicLength.words24));
+      expect(result.index, equals(5));
     });
 
     test('MnemonicApplication parsePath without app number', () {
       const path = "3'/18'/10'";
       final result = MnemonicApplication.parsePath(path);
 
-      expect(result.$1, equals(Language.spanish));
-      expect(result.$2, equals(MnemonicLength.words18));
-      expect(result.$3, equals(10));
+      expect(result.language, equals(Language.spanish));
+      expect(result.length, equals(MnemonicLength.words18));
+      expect(result.index, equals(10));
     });
   });
 }
