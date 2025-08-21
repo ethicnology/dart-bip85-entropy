@@ -18,24 +18,11 @@ class Bip85Entropy {
   static const int childNumber = 83696968;
   static const String pathPrefix = "m/$childNumber'";
 
-  /// Derives BIP85 entropy from a master key using a custom path after the application number.
-  ///
-  /// This method accepts both int and String for the third parameter:
-  /// - When passed an int, it will be converted to a hardened derivation path (e.g., 0 -> "0'")
-  /// - When passed a String, it will be used as-is for complex derivation paths
-  ///
-  /// The full derivation path will be: m/83696968'/applicationNumber'/customPath
-  ///
-  /// [xprvBase58] - Base58 encoded extended private key (master key)
-  /// [applicationNumber] - The application number for the derivation path
-  /// [path] - String path (e.g., "0'/1'/2'" for multiple indices)
-  ///
-  /// Returns 64 bytes of derived entropy
-  static Uint8List derive(
-    String xprvBase58,
-    Bip85Application application,
-    String path,
-  ) {
+  static Uint8List derive({
+    required String xprvBase58,
+    required Bip85Application application,
+    required String path,
+  }) {
     try {
       final root = bip32.Bip32Keys.fromBase58(xprvBase58);
 
@@ -56,119 +43,72 @@ class Bip85Entropy {
     }
   }
 
-  /// Derives BIP85 entropy from a master key using the path
-  ///
-  /// [xprvBase58] - Base58 encoded extended private key (master key)
-  /// [path] - String path (e.g., "39/0'/1'/2'" for multiple indices)
-  ///
-  /// Returns the String representation according to the application
-  static String deriveFromPath(String xprvBase58, String path) {
-    return derive_from_path.deriveFromPath(xprvBase58, path);
+  static String deriveFromPath({
+    required String xprvBase58,
+    required String path,
+  }) {
+    return derive_from_path.deriveFromPath(xprvBase58: xprvBase58, path: path);
   }
 
-  /// Derives a BIP39 mnemonic according to BIP85 specification.
-  ///
-  /// Path format: m/83696968'/39'/language'/words'/index'
-  ///
-  /// [xprvBase58] - Base58 encoded extended private key (master key)
-  /// [language] - Language code (0=English, 1=Japanese, etc.)
-  /// [wordCount] - Number of words (12, 15, 18, 21, 24)
-  /// [index] - Index for multiple mnemonics
-  ///
-  /// Returns the BIP39 mnemonic
-  static bip39.Mnemonic deriveMnemonic(
-    String xprvBase58,
-    bip39.Language language,
-    bip39.MnemonicLength length,
-    int index,
-  ) {
-    return mnemonic.deriveMnemonic(xprvBase58, language, length, index);
+  static bip39.Mnemonic deriveMnemonic({
+    required String xprvBase58,
+    required bip39.Language language,
+    required bip39.MnemonicLength length,
+    required int index,
+  }) {
+    return mnemonic.deriveMnemonic(
+      xprvBase58: xprvBase58,
+      language: language,
+      length: length,
+      index: index,
+    );
   }
 
-  /// Derives HD-Seed WIF according to BIP85 specification.
-  ///
-  /// Path format: m/83696968'/2'/index'
-  /// Uses most significant 256 bits as private key for WIF encoding.
-  ///
-  /// [xprvBase58] - Base58 encoded extended private key (master key)
-  /// [index] - Index for multiple WIF keys
-  ///
-  /// Returns the WIF-encoded private key
-  static String deriveWif(String xprvBase58, int index) {
-    return wif.deriveWif(xprvBase58, index);
+  static String deriveWif({required String xprvBase58, required int index}) {
+    return wif.deriveWif(xprvBase58: xprvBase58, index: index);
   }
 
-  /// Derives XPRV according to BIP85 specification.
-  ///
-  /// Path format: m/83696968'/32'/index'
-  /// First 32 bytes = chain code, second 32 bytes = private key
-  ///
-  /// [xprvBase58] - Base58 encoded extended private key (master key)
-  /// [index] - Index for multiple XPRV keys
-  ///
-  /// Returns the XPRV string
-  static String deriveXprv(String xprvBase58, int index) {
-    return xprv.deriveXprv(xprvBase58, index);
+  static String deriveXprv({required String xprvBase58, required int index}) {
+    return xprv.deriveXprv(xprvBase58: xprvBase58, index: index);
   }
 
-  /// Derives hex entropy according to BIP85 specification.
-  ///
-  /// Path format: m/83696968'/128169'/num_bytes'/index'
-  ///
-  /// [xprvBase58] - Base58 encoded extended private key (master key)
-  /// [numBytes] - Number of bytes to return (16-64)
-  /// [index] - Index for multiple hex values
-  ///
-  /// Returns hex-encoded entropy
-  static String deriveHex(String xprvBase58, int numBytes, int index) {
-    return hex_utils.deriveHex(xprvBase58, numBytes, index);
+  static String deriveHex({
+    required String xprvBase58,
+    required int numBytes,
+    required int index,
+  }) {
+    return hex_utils.deriveHex(
+      xprvBase58: xprvBase58,
+      numBytes: numBytes,
+      index: index,
+    );
   }
 
-  /// Derives Base64 password according to BIP85 specification.
-  ///
-  /// Path format: m/83696968'/707764'/pwd_len'/index'
-  ///
-  /// [xprvBase58] - Base58 encoded extended private key (master key)
-  /// [pwdLen] - Password length (20-86)
-  /// [index] - Index for multiple passwords
-  ///
-  /// Returns Base64-encoded password
-  static String derivePasswordBase64(String xprvBase58, int pwdLen, int index) {
-    return pwd_base64.derivePasswordBase64(xprvBase58, pwdLen, index);
+  static String derivePasswordBase64({
+    required String xprvBase58,
+    required int pwdLen,
+    required int index,
+  }) {
+    return pwd_base64.derivePasswordBase64(
+      xprvBase58: xprvBase58,
+      pwdLen: pwdLen,
+      index: index,
+    );
   }
 
-  /// Derives Base85 password according to BIP85 specification.
-  ///
-  /// Path format: m/83696968'/707785'/pwd_len'/index'
-  ///
-  /// [xprvBase58] - Base58 encoded extended private key (master key)
-  /// [pwdLen] - Password length (10-80)
-  /// [index] - Index for multiple passwords
-  ///
-  /// Returns Base85-encoded password
-  static String derivePasswordBase85(String xprvBase58, int pwdLen, int index) {
-    return pwd_base85.derivePasswordBase85(xprvBase58, pwdLen, index);
+  static String derivePasswordBase85({
+    required String xprvBase58,
+    required int pwdLen,
+    required int index,
+  }) {
+    return pwd_base85.derivePasswordBase85(
+      xprvBase58: xprvBase58,
+      pwdLen: pwdLen,
+      index: index,
+    );
   }
 
-  /// Derives dice rolls according to BIP85 specification.
-  ///
-  /// Path format: m/83696968'/89101'/sides'/rolls'/index'
-  ///
-  /// [xprvBase58] - Base58 encoded extended private key (master key)
-  /// [sides] - Number of sides on the die (2 to 2^32-1)
-  /// [rolls] - Number of rolls to generate (1 to 2^32-1)
-  /// [index] - Index for multiple sets of rolls
-  ///
-  /// Returns list of dice roll values
   // TODO: Implement Dice Rolls
-  // static List<int> deriveDiceRolls(
-  //   String xprvBase58,
-  //   int sides,
-  //   int rolls,
-  //   int index,
-  // ) {
-  //   return dice.deriveDiceRolls(xprvBase58, sides, rolls, index);
-  // }
 
   // TODO: Implement RSA
 }

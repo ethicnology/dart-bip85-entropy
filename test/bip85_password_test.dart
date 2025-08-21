@@ -11,36 +11,45 @@ void main() {
 
     test('21-char Base64 password', () {
       final password = Bip85Entropy.derivePasswordBase64(
-        TestValues.masterKey,
-        21,
-        0,
+        xprvBase58: TestValues.masterKey,
+        pwdLen: 21,
+        index: 0,
       );
       expect(password, TestValues.pwdBase64);
     });
 
     test('Base64 password from full path', () {
       final passwordFromFullPath = Bip85Entropy.deriveFromPath(
-        TestValues.masterKey,
-        "${Bip85Entropy.pathPrefix}/${application.number}'/$pwdLen'/$index'",
+        xprvBase58: TestValues.masterKey,
+        path:
+            "${Bip85Entropy.pathPrefix}/${application.number}'/$pwdLen'/$index'",
       );
       expect(passwordFromFullPath, TestValues.pwdBase64);
     });
 
     test('Base64 password from partial path', () {
       final passwordFromPartialPath = Bip85Entropy.deriveFromPath(
-        TestValues.masterKey,
-        "${application.number}'/$pwdLen'/$index'",
+        xprvBase58: TestValues.masterKey,
+        path: "${application.number}'/$pwdLen'/$index'",
       );
       expect(passwordFromPartialPath, TestValues.pwdBase64);
     });
 
     test('invalid password length throws exception', () {
       expect(
-        () => Bip85Entropy.derivePasswordBase64(TestValues.masterKey, 19, 0),
+        () => Bip85Entropy.derivePasswordBase64(
+          xprvBase58: TestValues.masterKey,
+          pwdLen: 19,
+          index: 0,
+        ),
         throwsA(isA<Bip85Exception>()),
       );
       expect(
-        () => Bip85Entropy.derivePasswordBase64(TestValues.masterKey, 87, 0),
+        () => Bip85Entropy.derivePasswordBase64(
+          xprvBase58: TestValues.masterKey,
+          pwdLen: 87,
+          index: 0,
+        ),
         throwsA(isA<Bip85Exception>()),
       );
     });
@@ -53,36 +62,45 @@ void main() {
 
     test('12-char Base85 password', () {
       final password = Bip85Entropy.derivePasswordBase85(
-        TestValues.masterKey,
-        12,
-        0,
+        xprvBase58: TestValues.masterKey,
+        pwdLen: 12,
+        index: 0,
       );
       expect(password, TestValues.pwdBase85);
     });
 
     test('Base85 password from full path', () {
       final passwordFromFullPath = Bip85Entropy.deriveFromPath(
-        TestValues.masterKey,
-        "${Bip85Entropy.pathPrefix}/${application.number}'/$pwdLen'/$index'",
+        xprvBase58: TestValues.masterKey,
+        path:
+            "${Bip85Entropy.pathPrefix}/${application.number}'/$pwdLen'/$index'",
       );
       expect(passwordFromFullPath, TestValues.pwdBase85);
     });
 
     test('Base85 password from partial path', () {
       final passwordFromPartialPath = Bip85Entropy.deriveFromPath(
-        TestValues.masterKey,
-        "${application.number}'/$pwdLen'/$index'",
+        xprvBase58: TestValues.masterKey,
+        path: "${application.number}'/$pwdLen'/$index'",
       );
       expect(passwordFromPartialPath, TestValues.pwdBase85);
     });
 
     test('invalid password length throws exception', () {
       expect(
-        () => Bip85Entropy.derivePasswordBase85(TestValues.masterKey, 9, 0),
+        () => Bip85Entropy.derivePasswordBase85(
+          xprvBase58: TestValues.masterKey,
+          pwdLen: 9,
+          index: 0,
+        ),
         throwsA(isA<Bip85Exception>()),
       );
       expect(
-        () => Bip85Entropy.derivePasswordBase85(TestValues.masterKey, 81, 0),
+        () => Bip85Entropy.derivePasswordBase85(
+          xprvBase58: TestValues.masterKey,
+          pwdLen: 81,
+          index: 0,
+        ),
         throwsA(isA<Bip85Exception>()),
       );
     });

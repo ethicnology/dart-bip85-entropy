@@ -1,16 +1,20 @@
 import 'package:bip85/bip85.dart';
 import 'package:convert/convert.dart';
 
-String deriveHex(String xprvBase58, int numBytes, int index) {
+String deriveHex({
+  required String xprvBase58,
+  required int numBytes,
+  required int index,
+}) {
   if (numBytes < 16 || numBytes > 64) {
     throw Bip85Exception('Number of bytes must be between 16 and 64');
   }
 
   try {
     final entropy = Bip85Entropy.derive(
-      xprvBase58,
-      HexApplication(),
-      "$numBytes'/$index'",
+      xprvBase58: xprvBase58,
+      application: HexApplication(),
+      path: "$numBytes'/$index'",
     );
     return hex.encode(entropy.sublist(0, numBytes));
   } catch (e) {

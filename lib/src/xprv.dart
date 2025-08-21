@@ -1,12 +1,12 @@
 import 'package:bip32_keys/bip32_keys.dart';
 import 'package:bip85/bip85.dart';
 
-String deriveXprv(String xprvBase58, int index) {
+String deriveXprv({required String xprvBase58, required int index}) {
   try {
     final entropy = Bip85Entropy.derive(
-      xprvBase58,
-      XprvApplication(),
-      "$index'",
+      xprvBase58: xprvBase58,
+      application: XprvApplication(),
+      path: "$index'",
     );
     final chainCode = entropy.sublist(0, 32);
     final privateKey = entropy.sublist(32, 64);

@@ -1,13 +1,13 @@
 import 'package:bip32_keys/bip32_keys.dart' as bip32;
 import 'package:bip85/bip85.dart';
 
-String deriveWif(String xprvBase58, int index) {
+String deriveWif({required String xprvBase58, required int index}) {
   try {
     final root = bip32.Bip32Keys.fromBase58(xprvBase58);
     final entropy = Bip85Entropy.derive(
-      xprvBase58,
-      WifApplication(),
-      "$index'",
+      xprvBase58: xprvBase58,
+      application: WifApplication(),
+      path: "$index'",
     );
     final privateKeyBytes = entropy.sublist(0, 32);
 

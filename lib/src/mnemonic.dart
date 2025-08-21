@@ -1,16 +1,16 @@
 import 'package:bip85/bip85.dart';
 
-Mnemonic deriveMnemonic(
-  String xprvBase58,
-  Language language,
-  MnemonicLength length,
-  int index,
-) {
+Mnemonic deriveMnemonic({
+  required String xprvBase58,
+  required Language language,
+  required MnemonicLength length,
+  required int index,
+}) {
   try {
     final entropy = Bip85Entropy.derive(
-      xprvBase58,
-      MnemonicApplication(),
-      "${language.toBip85Code()}'/${length.toBip85Code()}'/$index'",
+      xprvBase58: xprvBase58,
+      application: MnemonicApplication(),
+      path: "${language.toBip85Code()}'/${length.toBip85Code()}'/$index'",
     );
 
     // Truncate to required entropy length

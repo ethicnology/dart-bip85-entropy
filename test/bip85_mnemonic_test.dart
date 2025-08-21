@@ -13,10 +13,10 @@ void main() {
 
     test('derive 12-word English mnemonic', () {
       final mnemonic = Bip85Entropy.deriveMnemonic(
-        TestValues.masterKey,
-        Language.english,
-        MnemonicLength.words12,
-        0,
+        xprvBase58: TestValues.masterKey,
+        language: Language.english,
+        length: MnemonicLength.words12,
+        index: 0,
       );
 
       expect(
@@ -28,26 +28,27 @@ void main() {
 
     test('Mnemonic from full path', () {
       final mnemonicFromFullPath = Bip85Entropy.deriveFromPath(
-        TestValues.masterKey,
-        "${Bip85Entropy.pathPrefix}/${application.number}'/$languageCode'/$lengthCode'/$index'",
+        xprvBase58: TestValues.masterKey,
+        path:
+            "${Bip85Entropy.pathPrefix}/${application.number}'/$languageCode'/$lengthCode'/$index'",
       );
       expect(mnemonicFromFullPath, TestValues.bip39_12words_mnemonic);
     });
 
     test('Mnemonic from partial path', () {
       final mnemonicFromPartialPath = Bip85Entropy.deriveFromPath(
-        TestValues.masterKey,
-        "${application.number}'/$languageCode'/$lengthCode'/$index'",
+        xprvBase58: TestValues.masterKey,
+        path: "${application.number}'/$languageCode'/$lengthCode'/$index'",
       );
       expect(mnemonicFromPartialPath, TestValues.bip39_12words_mnemonic);
     });
 
     test('derive 18-word English mnemonic', () {
       final mnemonic = Bip85Entropy.deriveMnemonic(
-        TestValues.masterKey,
-        Language.english,
-        MnemonicLength.words18,
-        0,
+        xprvBase58: TestValues.masterKey,
+        language: Language.english,
+        length: MnemonicLength.words18,
+        index: 0,
       );
 
       expect(
@@ -59,10 +60,10 @@ void main() {
 
     test('derive 24-word English mnemonic', () {
       final mnemonic = Bip85Entropy.deriveMnemonic(
-        TestValues.masterKey,
-        Language.english,
-        MnemonicLength.words24,
-        0,
+        xprvBase58: TestValues.masterKey,
+        language: Language.english,
+        length: MnemonicLength.words24,
+        index: 0,
       );
 
       expect(

@@ -2,16 +2,20 @@ import 'dart:convert';
 
 import 'package:bip85/bip85.dart';
 
-String derivePasswordBase64(String xprvBase58, int pwdLen, int index) {
+String derivePasswordBase64({
+  required String xprvBase58,
+  required int pwdLen,
+  required int index,
+}) {
   if (pwdLen < 20 || pwdLen > 86) {
     throw Bip85Exception('Password length must be between 20 and 86');
   }
 
   try {
     final entropy = Bip85Entropy.derive(
-      xprvBase58,
-      PasswordBase64Application(),
-      "$pwdLen'/$index'",
+      xprvBase58: xprvBase58,
+      application: PasswordBase64Application(),
+      path: "$pwdLen'/$index'",
     );
     final base64String = base64Encode(entropy);
 

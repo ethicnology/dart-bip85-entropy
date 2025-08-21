@@ -41,10 +41,10 @@ class Bip85Application {
     return path;
   }
 
-  static List<int> parsePathComponents(
-    String path,
-    Bip85Application application,
-  ) {
+  static List<int> parsePathComponents({
+    required String path,
+    required Bip85Application application,
+  }) {
     path = removePrefixFromPathIfAny(path);
 
     final applicationPrefix = "${application.number}'/";
@@ -66,8 +66,8 @@ class MnemonicApplication extends Bip85Application {
     String path,
   ) {
     final components = Bip85Application.parsePathComponents(
-      path,
-      MnemonicApplication(),
+      path: path,
+      application: MnemonicApplication(),
     );
     final language = Bip39LanguageExtension.fromBip85Code(components[0]);
     final length = Bip39MnemonicLengthExtension.fromBip85Code(components[1]);
@@ -82,8 +82,8 @@ class HexApplication extends Bip85Application {
 
   static ({int numBytes, int index}) parsePath(String path) {
     final components = Bip85Application.parsePathComponents(
-      path,
-      HexApplication(),
+      path: path,
+      application: HexApplication(),
     );
 
     return (numBytes: components[0], index: components[1]);
@@ -95,8 +95,8 @@ class DiceApplication extends Bip85Application {
 
   static ({int sides, int rolls, int index}) parsePath(String path) {
     final components = Bip85Application.parsePathComponents(
-      path,
-      DiceApplication(),
+      path: path,
+      application: DiceApplication(),
     );
 
     return (sides: components[0], rolls: components[1], index: components[2]);
@@ -108,8 +108,8 @@ class PasswordBase64Application extends Bip85Application {
 
   static ({int pwdLen, int index}) parsePath(String path) {
     final components = Bip85Application.parsePathComponents(
-      path,
-      PasswordBase64Application(),
+      path: path,
+      application: PasswordBase64Application(),
     );
 
     return (pwdLen: components[0], index: components[1]);
@@ -121,8 +121,8 @@ class PasswordBase85Application extends Bip85Application {
 
   static ({int pwdLen, int index}) parsePath(String path) {
     final components = Bip85Application.parsePathComponents(
-      path,
-      PasswordBase85Application(),
+      path: path,
+      application: PasswordBase85Application(),
     );
 
     return (pwdLen: components[0], index: components[1]);
@@ -134,8 +134,8 @@ class WifApplication extends Bip85Application {
 
   static ({int index}) parsePath(String path) {
     final components = Bip85Application.parsePathComponents(
-      path,
-      WifApplication(),
+      path: path,
+      application: WifApplication(),
     );
 
     return (index: components.last);
@@ -147,8 +147,8 @@ class XprvApplication extends Bip85Application {
 
   static ({int index}) parsePath(String path) {
     final components = Bip85Application.parsePathComponents(
-      path,
-      XprvApplication(),
+      path: path,
+      application: XprvApplication(),
     );
 
     return (index: components.last);
