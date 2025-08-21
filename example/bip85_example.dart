@@ -77,19 +77,7 @@ void main() {
     "derivation path: ${Bip85Entropy.pathPrefix}/${HexApplication().number}'/${16}'/${1}'",
   );
 
-  // 5. BIP85-DRNG (Deterministic Random Number Generator)
-  print('\nDRNG');
-  print('-' * 40);
-
-  final entropy = Bip85Entropy.derive(masterKey, MnemonicApplication(), "0'");
-  final drng = Bip85DRNG(entropy);
-
-  final randomBytes1 = drng.read(16);
-  final randomBytes2 = drng.read(8);
-  print('DRNG 16 bytes: ${hex.encode(randomBytes1)}');
-  print('DRNG 8 bytes:  ${hex.encode(randomBytes2)}');
-
-  // 6. Custom Application Example
+  // 5. Custom Application Example
   print('\nCustom Application');
   print('-' * 40);
 

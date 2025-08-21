@@ -3,13 +3,16 @@
 A pure Dart implementation of [BIP85](https://github.com/bitcoin/bips/blob/master/bip-0085.mediawiki) - Deterministic Entropy From BIP32 Keychains.
 
 ## Features
-
-- **BIP39 Mnemonics** - Derive deterministic seed phrases (12/15/18/21/24 words) multi-languages
-- **Passwords** - Generate Base64/Base85 encoded passwords
-- **Cryptographic Keys** - Derive WIF private keys and extended private keys (XPRV)
-- **Raw Entropy** - Generate hex-encoded entropy (16-64 bytes)
-- **BIP85-DRNG** - Deterministic random number generator for continuous byte streams
-- **Custom Applications** - Support for custom application numbers
+- [x] **BIP39 Mnemonics**
+- [x] **HD-Seed WIF**
+- [x] **XPRV**
+- [x] **HEX**
+- [x] **PWD BASE64**
+- [x] **PWD BASE85**
+- [x] **Custom Path**
+- [ ] **RSA**
+- [ ] **RSA GPG**
+- [ ] **DICE**
 
 ## Quick Start
 
@@ -93,19 +96,7 @@ void main() {
     "derivation path: ${Bip85Entropy.pathPrefix}/${HexApplication().number}'/${16}'/${1}'",
   );
 
-  // 5. BIP85-DRNG (Deterministic Random Number Generator)
-  print('\nDRNG');
-  print('-' * 40);
-
-  final entropy = Bip85Entropy.derive(masterKey, MnemonicApplication(), "0'");
-  final drng = Bip85DRNG(entropy);
-
-  final randomBytes1 = drng.read(16);
-  final randomBytes2 = drng.read(8);
-  print('DRNG 16 bytes: ${hex.encode(randomBytes1)}');
-  print('DRNG 8 bytes:  ${hex.encode(randomBytes2)}');
-
-  // 6. Custom Application Example
+  // 5. Custom Application Example
   print('\nCustom Application');
   print('-' * 40);
 
@@ -117,15 +108,3 @@ void main() {
   );
 }
 ```
-
-## All Functions
-
-| Function | Purpose | Path Format |
-|----------|---------|-------------|
-| `deriveMnemonic()` | BIP39 seed phrases | `m/83696968'/39'/lang'/words'/index'` |
-| `derivePasswordBase64()` | Base64 passwords | `m/83696968'/707764'/len'/index'` |
-| `derivePasswordBase85()` | Base85 passwords | `m/83696968'/707785'/len'/index'` |
-| `deriveWif()` | WIF private keys | `m/83696968'/2'/index'` |
-| `deriveXprv()` | Extended private keys | `m/83696968'/32'/index'` |
-| `deriveHex()` | Raw hex entropy | `m/83696968'/128169'/bytes'/index'` |
-| `derive()` | Custom applications | `m/83696968'/app'/path` |

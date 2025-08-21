@@ -7,6 +7,5 @@ library;
 export 'src/bip85_entropy.dart';
 export 'src/errors.dart';
 export 'src/applications.dart';
-export 'src/bip85_drng.dart';
 export 'src/extensions.dart';
 export 'package:bip39_mnemonic/bip39_mnemonic.dart';
