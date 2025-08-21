@@ -13,6 +13,7 @@ dependencies:
   pointycastle: ^3.9.1
   convert: ^3.1.1
   bip39_mnemonic: ^4.0.1
+  base85: ^1.0.4
   
 
 dev_dependencies:
