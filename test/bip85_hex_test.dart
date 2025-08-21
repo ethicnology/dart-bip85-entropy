@@ -5,9 +5,32 @@ import '_test_values.dart';
 
 void main() {
   group('HEX Tests', () {
+    const application = HexApplication();
+    const numBytes = 64;
+    const index = 0;
     test('BIP85 test vector - 64-byte HEX', () {
-      final hexEntropy = Bip85Entropy.deriveHex(TestValues.masterKey, 64, 0);
+      final hexEntropy = Bip85Entropy.deriveHex(
+        TestValues.masterKey,
+        numBytes,
+        index,
+      );
       expect(hexEntropy, TestValues.hex64_entropy);
+    });
+
+    test('HEX from full path', () {
+      final hexEntropyFromFullPath = Bip85Entropy.deriveFromPath(
+        TestValues.masterKey,
+        "${Bip85Entropy.pathPrefix}/${application.number}'/$numBytes'/$index'",
+      );
+      expect(hexEntropyFromFullPath, TestValues.hex64_entropy);
+    });
+
+    test('HEX from partial path', () {
+      final hexEntropyFromPartialPath = Bip85Entropy.deriveFromPath(
+        TestValues.masterKey,
+        "${application.number}'/$numBytes'/$index'",
+      );
+      expect(hexEntropyFromPartialPath, TestValues.hex64_entropy);
     });
 
     test('invalid byte count throws exception', () {

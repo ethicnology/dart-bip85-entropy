@@ -6,6 +6,11 @@ import '_test_values.dart';
 
 void main() {
   group('BIP39 Mnemonic Tests', () {
+    const application = MnemonicApplication();
+    final languageCode = Language.english.toBip85Code();
+    final lengthCode = MnemonicLength.words12.toBip85Code();
+    const index = 0;
+
     test('derive 12-word English mnemonic', () {
       final mnemonic = Bip85Entropy.deriveMnemonic(
         TestValues.masterKey,
@@ -19,6 +24,22 @@ void main() {
         equals(TestValues.bip39_12words_entropy),
       );
       expect(mnemonic.sentence, equals(TestValues.bip39_12words_mnemonic));
+    });
+
+    test('Mnemonic from full path', () {
+      final mnemonicFromFullPath = Bip85Entropy.deriveFromPath(
+        TestValues.masterKey,
+        "${Bip85Entropy.pathPrefix}/${application.number}'/$languageCode'/$lengthCode'/$index'",
+      );
+      expect(mnemonicFromFullPath, TestValues.bip39_12words_mnemonic);
+    });
+
+    test('Mnemonic from partial path', () {
+      final mnemonicFromPartialPath = Bip85Entropy.deriveFromPath(
+        TestValues.masterKey,
+        "${application.number}'/$languageCode'/$lengthCode'/$index'",
+      );
+      expect(mnemonicFromPartialPath, TestValues.bip39_12words_mnemonic);
     });
 
     test('derive 18-word English mnemonic', () {

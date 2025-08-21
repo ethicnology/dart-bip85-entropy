@@ -9,5 +9,19 @@ void main() {
         throwsA(isA<Bip85ApplicationException>()),
       );
     });
+
+    test('throws when parsing path with reserved application number', () {
+      expect(
+        () => CustomApplication.parsePath("39'/0'/12'/0'"),
+        throwsA(isA<Bip85ApplicationException>()),
+      );
+    });
+
+    test('throws when parsing full path with reserved application number', () {
+      expect(
+        () => CustomApplication.parsePath("m/83696968'/39'/0'/12'/0'"),
+        throwsA(isA<Bip85ApplicationException>()),
+      );
+    });
   });
 }

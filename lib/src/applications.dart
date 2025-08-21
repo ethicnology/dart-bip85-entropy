@@ -28,6 +28,13 @@ class Bip85Application {
     }
   }
 
+  static Bip85Application fromPath(String path) {
+    path = removePrefixFromPathIfAny(path);
+    final split = path.replaceAll("'", '').split('/');
+    final applicationNumber = int.parse(split.first);
+    return fromNumber(applicationNumber);
+  }
+
   static String removePrefixFromPathIfAny(String path) {
     final prefix = "${Bip85Entropy.pathPrefix}/";
     if (path.contains(prefix)) path = path.replaceAll(prefix, '');
@@ -169,5 +176,20 @@ class CustomApplication implements Bip85Application {
       );
     }
     return application;
+  }
+
+  static ({CustomApplication application, String remainingPath}) parsePath(
+    String path,
+  ) {
+    final application = Bip85Application.fromPath(path);
+    if (application is! CustomApplication) {
+      throw Bip85ApplicationException(
+        'Application number ${application.number} is reserved for a ${application.runtimeType} application. '
+        'Use the appropriate standard application class instead.',
+      );
+    }
+    path = Bip85Application.removePrefixFromPathIfAny(path);
+    final remainingPath = path.replaceAll("${application.number}'/", '');
+    return (application: application, remainingPath: remainingPath);
   }
 }

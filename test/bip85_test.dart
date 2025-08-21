@@ -5,22 +5,64 @@ import '_test_values.dart';
 
 void main() {
   group('BIP85 Tests', () {
-    test('BIP85 test vector - Test case 1: m/83696968\'/0\'/0\'', () {
-      final entropy = Bip85Entropy.derive(
+    const applicationNumber = 0;
+    const index1 = 0;
+    const index2 = 1;
+
+    test(
+      'BIP85 test vector - Test case 1: m/83696968\'/$applicationNumber\'/$index1\'',
+      () {
+        final entropy = Bip85Entropy.derive(
+          TestValues.masterKey,
+          CustomApplication.fromNumber(0),
+          "$index1'",
+        );
+        expect(hex.encode(entropy), TestValues.entropy_0_0);
+      },
+    );
+
+    test('Custom application from full path entropy_0_0', () {
+      final entropyFromFullPath = Bip85Entropy.deriveFromPath(
         TestValues.masterKey,
-        CustomApplication.fromNumber(0),
-        "0'",
+        "${Bip85Entropy.pathPrefix}/$applicationNumber'/$index1'",
       );
-      expect(hex.encode(entropy), TestValues.entropy_0_0);
+      expect(entropyFromFullPath, TestValues.entropy_0_0);
     });
 
-    test('BIP85 test vector - Test case 2: m/83696968\'/0\'/1\'', () {
-      final entropy = Bip85Entropy.derive(
+    test('Custom application from partial path entropy_0_0', () {
+      final entropyFromPartialPath = Bip85Entropy.deriveFromPath(
         TestValues.masterKey,
-        CustomApplication.fromNumber(0),
-        "1'",
+        "$applicationNumber'/$index1'",
       );
-      expect(hex.encode(entropy), TestValues.entropy_0_1);
+      expect(entropyFromPartialPath, TestValues.entropy_0_0);
+    });
+
+    test(
+      'BIP85 test vector - Test case 2: m/83696968\'/$applicationNumber\'/$index2\'',
+      () {
+        final entropy = Bip85Entropy.derive(
+          TestValues.masterKey,
+          CustomApplication.fromNumber(0),
+          "$index2'",
+        );
+        expect(hex.encode(entropy), TestValues.entropy_0_1);
+      },
+    );
+
+    test('Custom application from full path entropy_0_1', () {
+      final entropyFromFullPath = Bip85Entropy.deriveFromPath(
+        TestValues.masterKey,
+        "${Bip85Entropy.pathPrefix}/$applicationNumber'/$index2'",
+      );
+      expect(entropyFromFullPath, TestValues.entropy_0_1);
+    });
+
+    test('Custom application from partial path entropy_0_1', () {
+      final entropyFromPartialPath = Bip85Entropy.deriveFromPath(
+        TestValues.masterKey,
+        "$applicationNumber'/$index2'",
+      );
+      expect(entropyFromPartialPath, TestValues.entropy_0_1);
     });
   });
 }

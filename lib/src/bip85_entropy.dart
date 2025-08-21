@@ -11,6 +11,7 @@ import 'xprv.dart' as xprv;
 import 'hex.dart' as hex_utils;
 import 'pwd_base64.dart' as pwd_base64;
 import 'pwd_base85.dart' as pwd_base85;
+import 'derive_from_path.dart' as derive_from_path;
 
 class Bip85Entropy {
   static const String _hmacKey = 'bip-entropy-from-k';
@@ -53,6 +54,16 @@ class Bip85Entropy {
     } catch (e) {
       throw Bip85Exception('Failed to derive BIP85 entropy with path: $e');
     }
+  }
+
+  /// Derives BIP85 entropy from a master key using the path
+  ///
+  /// [xprvBase58] - Base58 encoded extended private key (master key)
+  /// [path] - String path (e.g., "39/0'/1'/2'" for multiple indices)
+  ///
+  /// Returns the String representation according to the application
+  static String deriveFromPath(String xprvBase58, String path) {
+    return derive_from_path.deriveFromPath(xprvBase58, path);
   }
 
   /// Derives a BIP39 mnemonic according to BIP85 specification.
