@@ -1,4 +1,5 @@
 # BIP85 Dart
+[![codecov](https://codecov.io/gh/ethicnology/dart-bip85-entropy/graph/badge.svg?token=A7B2U9MS1L)](https://codecov.io/gh/ethicnology/dart-bip85-entropy)
 
 A pure Dart implementation of [BIP85](https://github.com/bitcoin/bips/blob/master/bip-0085.mediawiki) - Deterministic Entropy From BIP32 Keychains.
 
