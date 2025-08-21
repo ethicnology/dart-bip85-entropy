@@ -1,4 +1,4 @@
-import 'errors.dart';
+import 'package:bip85/bip85.dart';
 
 class Bip85Application {
   final int number;
@@ -27,34 +27,125 @@ class Bip85Application {
         return CustomApplication._(number: number);
     }
   }
+
+  static String removePrefixFromPathIfAny(String path) {
+    final prefix = "${Bip85Entropy.pathPrefix}/";
+    if (path.contains(prefix)) path = path.replaceAll(prefix, '');
+    return path;
+  }
+
+  static List<int> parsePathComponents(
+    String path,
+    Bip85Application application,
+  ) {
+    path = removePrefixFromPathIfAny(path);
+
+    final applicationPrefix = "${application.number}'/";
+    if (path.contains(applicationPrefix)) {
+      path = path.replaceAll(applicationPrefix, '');
+    }
+
+    path = path.replaceAll("'", '');
+    final split = path.split('/');
+
+    return split.map((component) => int.parse(component)).toList();
+  }
 }
 
 class MnemonicApplication extends Bip85Application {
   const MnemonicApplication() : super._(number: 39);
+
+  static (Language language, MnemonicLength length, int index) parsePath(
+    String path,
+  ) {
+    final components = Bip85Application.parsePathComponents(
+      path,
+      MnemonicApplication(),
+    );
+    final language = Bip39LanguageExtension.fromBip85Code(components[0]);
+    final length = Bip39MnemonicLengthExtension.fromBip85Code(components[1]);
+    final index = components[2];
+
+    return (language, length, index);
+  }
 }
 
 class HexApplication extends Bip85Application {
   const HexApplication() : super._(number: 128169);
+
+  static ({int numBytes, int index}) parsePath(String path) {
+    final components = Bip85Application.parsePathComponents(
+      path,
+      HexApplication(),
+    );
+
+    return (numBytes: components[0], index: components[1]);
+  }
 }
 
 class DiceApplication extends Bip85Application {
   const DiceApplication() : super._(number: 89101);
+
+  static ({int sides, int rolls, int index}) parsePath(String path) {
+    final components = Bip85Application.parsePathComponents(
+      path,
+      DiceApplication(),
+    );
+
+    return (sides: components[0], rolls: components[1], index: components[2]);
+  }
 }
 
 class PasswordBase64Application extends Bip85Application {
   const PasswordBase64Application() : super._(number: 707764);
+
+  static ({int pwdLen, int index}) parsePath(String path) {
+    final components = Bip85Application.parsePathComponents(
+      path,
+      PasswordBase64Application(),
+    );
+
+    return (pwdLen: components[0], index: components[1]);
+  }
 }
 
 class PasswordBase85Application extends Bip85Application {
   const PasswordBase85Application() : super._(number: 707785);
+
+  static ({int pwdLen, int index}) parsePath(String path) {
+    final components = Bip85Application.parsePathComponents(
+      path,
+      PasswordBase85Application(),
+    );
+
+    return (pwdLen: components[0], index: components[1]);
+  }
 }
 
 class WifApplication extends Bip85Application {
   const WifApplication() : super._(number: 2);
+
+  static ({int index}) parsePath(String path) {
+    final components = Bip85Application.parsePathComponents(
+      path,
+      WifApplication(),
+    );
+
+    return (index: components.last);
+  }
 }
 
 class XprvApplication extends Bip85Application {
   const XprvApplication() : super._(number: 32);
+
+  static ({int index}) parsePath(String path) {
+    final components = Bip85Application.parsePathComponents(
+      path,
+      XprvApplication(),
+    );
+
+    return (index: components.last);
+  }
 }
 
 class RsaApplication extends Bip85Application {
