@@ -1,4 +1,4 @@
-import 'package:bip85/bip85.dart' as bip39;
+import 'package:bip85_entropy/bip85_entropy.dart' as bip39;
 
 extension Bip39MnemonicLengthExtension on bip39.MnemonicLength {
   int toBip85Code() => words;

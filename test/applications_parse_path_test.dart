@@ -1,4 +1,4 @@
-import 'package:bip85/bip85.dart';
+import 'package:bip85_entropy/bip85_entropy.dart';
 import 'package:test/test.dart';
 
 void main() {

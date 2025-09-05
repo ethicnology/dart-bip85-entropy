@@ -1,5 +1,5 @@
-import 'package:bip85/bip85.dart';
-import 'package:bip85/src/utils.dart';
+import 'package:bip85_entropy/bip85_entropy.dart';
+import 'package:bip85_entropy/src/utils.dart';
 
 String derivePasswordBase85({
   required String xprvBase58,

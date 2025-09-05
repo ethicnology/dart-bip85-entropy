@@ -1,5 +1,5 @@
 import 'package:bip32_keys/bip32_keys.dart' as bip32;
-import 'package:bip85/bip85.dart';
+import 'package:bip85_entropy/bip85_entropy.dart';
 
 String deriveWif({required String xprvBase58, required int index}) {
   try {

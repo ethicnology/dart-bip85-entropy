@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:bip85/bip85.dart';
+import 'package:bip85_entropy/bip85_entropy.dart';
 
 String derivePasswordBase64({
   required String xprvBase58,

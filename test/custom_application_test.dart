@@ -1,5 +1,5 @@
 import 'package:test/test.dart';
-import 'package:bip85/bip85.dart';
+import 'package:bip85_entropy/bip85_entropy.dart';
 
 void main() {
   group('CustomApplication', () {
