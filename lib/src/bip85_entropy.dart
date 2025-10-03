@@ -1,9 +1,8 @@
 import 'dart:typed_data';
 import 'package:bip32_keys/bip32_keys.dart' as bip32;
 import 'package:bip39_mnemonic/bip39_mnemonic.dart' as bip39;
+import 'package:bip85_entropy/bip85_entropy.dart';
 
-import 'applications.dart';
-import 'errors.dart';
 import 'utils.dart';
 import 'mnemonic.dart' as mnemonic;
 import 'wif.dart' as wif;
@@ -48,6 +47,16 @@ class Bip85Entropy {
     required String path,
   }) {
     return derive_from_path.deriveFromPath(xprvBase58: xprvBase58, path: path);
+  }
+
+  static String deriveFromHardenedPath({
+    required String xprvBase58,
+    required Bip85HardenedPath hardenedPath,
+  }) {
+    return derive_from_path.deriveFromPath(
+      xprvBase58: xprvBase58,
+      path: hardenedPath.toString(),
+    );
   }
 
   static bip39.Mnemonic deriveMnemonic({

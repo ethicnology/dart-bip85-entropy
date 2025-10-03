@@ -8,4 +8,5 @@ export 'src/bip85_entropy.dart';
 export 'src/errors.dart';
 export 'src/applications.dart';
 export 'src/extensions.dart';
+export 'src/bip85_hardened_path.dart';
 export 'package:bip39_mnemonic/bip39_mnemonic.dart';
