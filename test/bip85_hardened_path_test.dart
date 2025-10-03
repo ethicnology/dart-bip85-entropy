@@ -166,9 +166,9 @@ void main() {
         const path = "m/83696968'/39'/0'/12'/0'";
         final hardenedPath = Bip85HardenedPath(path: path);
 
-        final resultFromPath = Bip85Entropy.deriveFromPath(
+        final resultFromPath = Bip85Entropy.deriveFromRawPath(
           xprvBase58: TestValues.masterKey,
-          path: path,
+          rawPath: path,
         );
 
         final resultFromHardenedPath = Bip85Entropy.deriveFromHardenedPath(
@@ -184,9 +184,9 @@ void main() {
         const path = "m/83696968'/128169'/64'/0'";
         final hardenedPath = Bip85HardenedPath(path: path);
 
-        final resultFromPath = Bip85Entropy.deriveFromPath(
+        final resultFromPath = Bip85Entropy.deriveFromRawPath(
           xprvBase58: TestValues.masterKey,
-          path: path,
+          rawPath: path,
         );
 
         final resultFromHardenedPath = Bip85Entropy.deriveFromHardenedPath(
@@ -202,9 +202,9 @@ void main() {
         const path = "m/83696968'/2'/0'";
         final hardenedPath = Bip85HardenedPath(path: path);
 
-        final resultFromPath = Bip85Entropy.deriveFromPath(
+        final resultFromPath = Bip85Entropy.deriveFromRawPath(
           xprvBase58: TestValues.masterKey,
-          path: path,
+          rawPath: path,
         );
 
         final resultFromHardenedPath = Bip85Entropy.deriveFromHardenedPath(
@@ -220,9 +220,9 @@ void main() {
         const path = "m/83696968'/32'/0'";
         final hardenedPath = Bip85HardenedPath(path: path);
 
-        final resultFromPath = Bip85Entropy.deriveFromPath(
+        final resultFromPath = Bip85Entropy.deriveFromRawPath(
           xprvBase58: TestValues.masterKey,
-          path: path,
+          rawPath: path,
         );
 
         final resultFromHardenedPath = Bip85Entropy.deriveFromHardenedPath(
@@ -238,9 +238,9 @@ void main() {
         const path = "m/83696968'/707764'/21'/0'";
         final hardenedPath = Bip85HardenedPath(path: path);
 
-        final resultFromPath = Bip85Entropy.deriveFromPath(
+        final resultFromPath = Bip85Entropy.deriveFromRawPath(
           xprvBase58: TestValues.masterKey,
-          path: path,
+          rawPath: path,
         );
 
         final resultFromHardenedPath = Bip85Entropy.deriveFromHardenedPath(
@@ -256,9 +256,9 @@ void main() {
         const path = "m/83696968'/707785'/12'/0'";
         final hardenedPath = Bip85HardenedPath(path: path);
 
-        final resultFromPath = Bip85Entropy.deriveFromPath(
+        final resultFromPath = Bip85Entropy.deriveFromRawPath(
           xprvBase58: TestValues.masterKey,
-          path: path,
+          rawPath: path,
         );
 
         final resultFromHardenedPath = Bip85Entropy.deriveFromHardenedPath(
@@ -274,9 +274,9 @@ void main() {
         const path = "m/83696968'/0'/0'";
         final hardenedPath = Bip85HardenedPath(path: path);
 
-        final resultFromPath = Bip85Entropy.deriveFromPath(
+        final resultFromPath = Bip85Entropy.deriveFromRawPath(
           xprvBase58: TestValues.masterKey,
-          path: path,
+          rawPath: path,
         );
 
         final resultFromHardenedPath = Bip85Entropy.deriveFromHardenedPath(
@@ -292,9 +292,9 @@ void main() {
         const path = "39'/0'/12'/0'";
         final hardenedPath = Bip85HardenedPath(path: path);
 
-        final resultFromPath = Bip85Entropy.deriveFromPath(
+        final resultFromPath = Bip85Entropy.deriveFromRawPath(
           xprvBase58: TestValues.masterKey,
-          path: path,
+          rawPath: path,
         );
 
         final resultFromHardenedPath = Bip85Entropy.deriveFromHardenedPath(
@@ -313,9 +313,9 @@ void main() {
 
         // Both should throw the same exception for unsupported application
         expect(
-          () => Bip85Entropy.deriveFromPath(
+          () => Bip85Entropy.deriveFromRawPath(
             xprvBase58: TestValues.masterKey,
-            path: path,
+            rawPath: path,
           ),
           throwsA(isA<Bip85Exception>()),
         );

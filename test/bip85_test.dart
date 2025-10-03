@@ -22,17 +22,17 @@ void main() {
     );
 
     test('Custom application from full path entropy_0_0', () {
-      final entropyFromFullPath = Bip85Entropy.deriveFromPath(
+      final entropyFromFullPath = Bip85Entropy.deriveFromRawPath(
         xprvBase58: TestValues.masterKey,
-        path: "${Bip85Entropy.pathPrefix}/$applicationNumber'/$index1'",
+        rawPath: "${Bip85Entropy.pathPrefix}/$applicationNumber'/$index1'",
       );
       expect(entropyFromFullPath, TestValues.entropy_0_0);
     });
 
     test('Custom application from partial path entropy_0_0', () {
-      final entropyFromPartialPath = Bip85Entropy.deriveFromPath(
+      final entropyFromPartialPath = Bip85Entropy.deriveFromRawPath(
         xprvBase58: TestValues.masterKey,
-        path: "$applicationNumber'/$index1'",
+        rawPath: "$applicationNumber'/$index1'",
       );
       expect(entropyFromPartialPath, TestValues.entropy_0_0);
     });
@@ -50,17 +50,17 @@ void main() {
     );
 
     test('Custom application from full path entropy_0_1', () {
-      final entropyFromFullPath = Bip85Entropy.deriveFromPath(
+      final entropyFromFullPath = Bip85Entropy.deriveFromRawPath(
         xprvBase58: TestValues.masterKey,
-        path: "${Bip85Entropy.pathPrefix}/$applicationNumber'/$index2'",
+        rawPath: "${Bip85Entropy.pathPrefix}/$applicationNumber'/$index2'",
       );
       expect(entropyFromFullPath, TestValues.entropy_0_1);
     });
 
     test('Custom application from partial path entropy_0_1', () {
-      final entropyFromPartialPath = Bip85Entropy.deriveFromPath(
+      final entropyFromPartialPath = Bip85Entropy.deriveFromRawPath(
         xprvBase58: TestValues.masterKey,
-        path: "$applicationNumber'/$index2'",
+        rawPath: "$applicationNumber'/$index2'",
       );
       expect(entropyFromPartialPath, TestValues.entropy_0_1);
     });

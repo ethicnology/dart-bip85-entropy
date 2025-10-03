@@ -17,17 +17,17 @@ void main() {
     });
 
     test('XPRV from full path', () {
-      final xprvFromFullPath = Bip85Entropy.deriveFromPath(
+      final xprvFromFullPath = Bip85Entropy.deriveFromRawPath(
         xprvBase58: TestValues.masterKey,
-        path: "${Bip85Entropy.pathPrefix}/${application.number}'/$index'",
+        rawPath: "${Bip85Entropy.pathPrefix}/${application.number}'/$index'",
       );
       expect(xprvFromFullPath, TestValues.xprv);
     });
 
     test('XPRV from partial path', () {
-      final xprvFromPartialPath = Bip85Entropy.deriveFromPath(
+      final xprvFromPartialPath = Bip85Entropy.deriveFromRawPath(
         xprvBase58: TestValues.masterKey,
-        path: "${application.number}'/$index'",
+        rawPath: "${application.number}'/$index'",
       );
       expect(xprvFromPartialPath, TestValues.xprv);
     });

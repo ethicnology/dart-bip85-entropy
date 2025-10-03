@@ -26,14 +26,26 @@ void main() {
   const masterKey =
       'xprv9s21ZrQH143K2LBWUUQRFXhucrQqBpKdRRxNVq2zBqsx8HVqFk2uYo8kmbaLLHRdqtQpUm98uKfu3vca1LqdGhUtyoFnCNkfmXRyPXLjbKb';
 
-  print('\nDerive from path');
+  // Path-based derivation (recommended: use deriveFromHardenedPath)
+  // To avoid missing a single quote `'` in one of your path component
+  print('\n🛤️  Path-based Derivation');
   print('-' * 40);
 
-  final mnemonicDerivedFromPath = Bip85Entropy.deriveFromPath(
+  // Type-safe hardened path validation (recommended)
+  final hardenedPath = Bip85HardenedPath(path: "39'/0'/12'/0'");
+  final mnemonicFromHardenedPath = Bip85Entropy.deriveFromHardenedPath(
     xprvBase58: masterKey,
-    path: "39'/0'/12'/0'",
+    hardenedPath: hardenedPath,
   );
-  print('Mnemonic derived from path: $mnemonicDerivedFromPath');
+  print('Mnemonic: $mnemonicFromHardenedPath');
+
+  // String-based path (also available)
+  final mnemonicFromRawPath = Bip85Entropy.deriveFromRawPath(
+    xprvBase58: masterKey,
+    rawPath: "39'/0'/12'/0'",
+  );
+  print('Mnemonic: $mnemonicFromRawPath');
+  print('Same result but HardenedPath avoid to forget a single quote for a path component: ${mnemonicFromRawPath == mnemonicFromHardenedPath}');
 
   // 1. BIP39 Mnemonic Generation
   print('\n📝 BIP39 Mnemonic Generation');
@@ -138,4 +150,36 @@ void main() {
     "derivation path: ${Bip85Entropy.pathPrefix}/${customApp.number}'/${0}'/${1}'",
   );
 }
+```
+
+## Type-Safe Path Validation
+
+The library provides `Bip85HardenedPath` for compile-time path validation:
+
+```dart
+// ✅ Valid hardened path
+final validPath = Bip85HardenedPath(path: "39'/0'/12'/0'");
+
+// ❌ Throws exception - non-hardened component
+try {
+  Bip85HardenedPath(path: "39/0'/12'/0'"); // Missing quote on first component
+} catch (e) {
+  print('Invalid path: $e');
+}
+
+// ❌ Throws exception - missing quote
+try {
+  Bip85HardenedPath(path: "39'/0'/12'/0"); // Missing quote on last component
+} catch (e) {
+  print('Invalid path: $e');
+}
+```
+
+### We recommend `deriveFromHardenedPath` over `deriveFromRawPath`?
+
+- **🛡️ Type Safety**: Compile-time validation of hardened derivation paths
+- **🔒 BIP85 Compliance**: Ensures all components use hardened derivation (required by BIP85)
+- **⚡ Same Performance**: Identical output to `deriveFromRawPath` with zero overhead
+- **🐛 Early Error Detection**: Catches invalid paths before derivation attempts
+
 ```
