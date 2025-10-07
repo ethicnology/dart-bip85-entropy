@@ -1,11 +1,16 @@
 import 'package:bip85_entropy/bip85_entropy.dart';
 
+/// Represents a BIP85 derivation path where all components must be hardened.
+/// A hardened path component ends with a single quote character (').
 class Bip85HardenedPath {
   late String _path;
 
   @override
   String toString() => _path;
 
+  /// Creates a [Bip85HardenedPath] from a string path.
+  /// Validates that all path components are hardened (end with ').
+  /// Throws [Bip85Exception] if validation fails.
   Bip85HardenedPath(String path) {
     if (path.isEmpty) {
       throw Bip85Exception('Path cannot be empty');

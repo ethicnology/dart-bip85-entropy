@@ -12,11 +12,19 @@ import 'pwd_base64.dart' as pwd_base64;
 import 'pwd_base85.dart' as pwd_base85;
 import 'derive_from_path.dart' as derive_from_path;
 
+/// Main class for deriving deterministic entropy from BIP32 extended private keys
+/// according to the BIP85 specification.
 class Bip85Entropy {
   static const String _hmacKey = 'bip-entropy-from-k';
+
+  /// The BIP85 child number constant (83696968).
   static const int childNumber = 83696968;
+
+  /// The BIP85 path prefix (m/83696968').
   static const String pathPrefix = "m/$childNumber'";
 
+  /// Derives entropy bytes using BIP85 for a given application and path.
+  /// Returns 64 bytes of entropy that can be used for various applications.
   static Uint8List derive({
     required String xprvBase58,
     required Bip85Application application,
@@ -42,6 +50,8 @@ class Bip85Entropy {
     }
   }
 
+  /// Derives entropy from a raw derivation path string.
+  /// Returns a hexadecimal string representation of the derived entropy.
   static String deriveFromRawPath({
     required String xprvBase58,
     required String path,
@@ -49,6 +59,8 @@ class Bip85Entropy {
     return derive_from_path.deriveFromPath(xprvBase58: xprvBase58, path: path);
   }
 
+  /// Derives entropy from a hardened derivation path.
+  /// Returns a hexadecimal string representation of the derived entropy.
   static String deriveFromHardenedPath({
     required String xprvBase58,
     required Bip85HardenedPath path,
@@ -59,6 +71,8 @@ class Bip85Entropy {
     );
   }
 
+  /// Derives a BIP39 mnemonic phrase using BIP85.
+  /// Returns a [Mnemonic] in the specified language and length.
   static bip39.Mnemonic deriveMnemonic({
     required String xprvBase58,
     required bip39.Language language,
@@ -73,14 +87,20 @@ class Bip85Entropy {
     );
   }
 
+  /// Derives a Wallet Import Format (WIF) private key using BIP85.
+  /// Returns a WIF-encoded private key string.
   static String deriveWif({required String xprvBase58, required int index}) {
     return wif.deriveWif(xprvBase58: xprvBase58, index: index);
   }
 
+  /// Derives a BIP32 extended private key (xprv) using BIP85.
+  /// Returns a base58-encoded extended private key string.
   static String deriveXprv({required String xprvBase58, required int index}) {
     return xprv.deriveXprv(xprvBase58: xprvBase58, index: index);
   }
 
+  /// Derives hexadecimal entropy using BIP85.
+  /// Returns a hex-encoded string of the specified byte length.
   static String deriveHex({
     required String xprvBase58,
     required int numBytes,
@@ -93,6 +113,8 @@ class Bip85Entropy {
     );
   }
 
+  /// Derives a Base64-encoded password using BIP85.
+  /// Returns a password string of the specified length using Base64 encoding.
   static String derivePasswordBase64({
     required String xprvBase58,
     required int pwdLen,
@@ -105,6 +127,8 @@ class Bip85Entropy {
     );
   }
 
+  /// Derives a Base85-encoded password using BIP85.
+  /// Returns a password string of the specified length using Base85 encoding.
   static String derivePasswordBase85({
     required String xprvBase58,
     required int pwdLen,
@@ -116,8 +140,4 @@ class Bip85Entropy {
       index: index,
     );
   }
-
-  // TODO: Implement Dice Rolls
-
-  // TODO: Implement RSA
 }
