@@ -21,7 +21,7 @@ void main() {
     test('Base64 password from full path', () {
       final passwordFromFullPath = Bip85Entropy.deriveFromRawPath(
         xprvBase58: TestValues.masterKey,
-        rawPath:
+        path:
             "${Bip85Entropy.pathPrefix}/${application.number}'/$pwdLen'/$index'",
       );
       expect(passwordFromFullPath, TestValues.pwdBase64);
@@ -30,7 +30,7 @@ void main() {
     test('Base64 password from partial path', () {
       final passwordFromPartialPath = Bip85Entropy.deriveFromRawPath(
         xprvBase58: TestValues.masterKey,
-        rawPath: "${application.number}'/$pwdLen'/$index'",
+        path: "${application.number}'/$pwdLen'/$index'",
       );
       expect(passwordFromPartialPath, TestValues.pwdBase64);
     });
@@ -72,7 +72,7 @@ void main() {
     test('Base85 password from full path', () {
       final passwordFromFullPath = Bip85Entropy.deriveFromRawPath(
         xprvBase58: TestValues.masterKey,
-        rawPath:
+        path:
             "${Bip85Entropy.pathPrefix}/${application.number}'/$pwdLen'/$index'",
       );
       expect(passwordFromFullPath, TestValues.pwdBase85);
@@ -81,7 +81,7 @@ void main() {
     test('Base85 password from partial path', () {
       final passwordFromPartialPath = Bip85Entropy.deriveFromRawPath(
         xprvBase58: TestValues.masterKey,
-        rawPath: "${application.number}'/$pwdLen'/$index'",
+        path: "${application.number}'/$pwdLen'/$index'",
       );
       expect(passwordFromPartialPath, TestValues.pwdBase85);
     });

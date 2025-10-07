@@ -20,7 +20,7 @@ void main() {
     test('HEX from full path', () {
       final hexEntropyFromFullPath = Bip85Entropy.deriveFromRawPath(
         xprvBase58: TestValues.masterKey,
-        rawPath:
+        path:
             "${Bip85Entropy.pathPrefix}/${application.number}'/$numBytes'/$index'",
       );
       expect(hexEntropyFromFullPath, TestValues.hex64_entropy);
@@ -29,7 +29,7 @@ void main() {
     test('HEX from partial path', () {
       final hexEntropyFromPartialPath = Bip85Entropy.deriveFromRawPath(
         xprvBase58: TestValues.masterKey,
-        rawPath: "${application.number}'/$numBytes'/$index'",
+        path: "${application.number}'/$numBytes'/$index'",
       );
       expect(hexEntropyFromPartialPath, TestValues.hex64_entropy);
     });

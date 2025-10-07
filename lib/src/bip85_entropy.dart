@@ -44,21 +44,18 @@ class Bip85Entropy {
 
   static String deriveFromRawPath({
     required String xprvBase58,
-    required String rawPath,
+    required String path,
   }) {
-    return derive_from_path.deriveFromPath(
-      xprvBase58: xprvBase58,
-      path: rawPath,
-    );
+    return derive_from_path.deriveFromPath(xprvBase58: xprvBase58, path: path);
   }
 
   static String deriveFromHardenedPath({
     required String xprvBase58,
-    required Bip85HardenedPath hardenedPath,
+    required Bip85HardenedPath path,
   }) {
     return derive_from_path.deriveFromPath(
       xprvBase58: xprvBase58,
-      path: hardenedPath.toString(),
+      path: path.toString(),
     );
   }
 

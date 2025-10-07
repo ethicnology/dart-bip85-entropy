@@ -26,27 +26,6 @@ void main() {
   const masterKey =
       'xprv9s21ZrQH143K2LBWUUQRFXhucrQqBpKdRRxNVq2zBqsx8HVqFk2uYo8kmbaLLHRdqtQpUm98uKfu3vca1LqdGhUtyoFnCNkfmXRyPXLjbKb';
 
-  // Path-based derivation (recommended: use deriveFromHardenedPath)
-  // To avoid missing a single quote `'` in one of your path component
-  print('\n🛤️  Path-based Derivation');
-  print('-' * 40);
-
-  // Type-safe hardened path validation (recommended)
-  final hardenedPath = Bip85HardenedPath(path: "39'/0'/12'/0'");
-  final mnemonicFromHardenedPath = Bip85Entropy.deriveFromHardenedPath(
-    xprvBase58: masterKey,
-    hardenedPath: hardenedPath,
-  );
-  print('Mnemonic: $mnemonicFromHardenedPath');
-
-  // String-based path (also available)
-  final mnemonicFromRawPath = Bip85Entropy.deriveFromRawPath(
-    xprvBase58: masterKey,
-    rawPath: "39'/0'/12'/0'",
-  );
-  print('Mnemonic: $mnemonicFromRawPath');
-  print('Same result but HardenedPath avoid to forget a single quote for a path component: ${mnemonicFromRawPath == mnemonicFromHardenedPath}');
-
   // 1. BIP39 Mnemonic Generation
   print('\n📝 BIP39 Mnemonic Generation');
   print('-' * 40);
@@ -149,29 +128,50 @@ void main() {
   print(
     "derivation path: ${Bip85Entropy.pathPrefix}/${customApp.number}'/${0}'/${1}'",
   );
-}
-```
 
-## Type-Safe Path Validation
+  print('\nDerive from HardenedPath over RawPath');
+  print('-' * 40);
 
-The library provides `Bip85HardenedPath` for compile-time path validation:
+  final mnemonicFromRawPath = Bip85Entropy.deriveFromRawPath(
+    xprvBase58: masterKey,
+    path: "39'/0'/12'/0'",
+  );
+  print('Mnemonic derived from path: $mnemonicFromRawPath');
 
-```dart
-// ✅ Valid hardened path
-final validPath = Bip85HardenedPath(path: "39'/0'/12'/0'");
+  // Using deriveFromHardenedPath (recommended - type-safe)
+  final hardenedPath = Bip85HardenedPath("39'/0'/12'/0'");
+  print('derivation path: ${hardenedPath.toString()}');
 
-// ❌ Throws exception - non-hardened component
-try {
-  Bip85HardenedPath(path: "39/0'/12'/0'"); // Missing quote on first component
-} catch (e) {
-  print('Invalid path: $e');
-}
+  final mnemonicFromHardenedPath = Bip85Entropy.deriveFromHardenedPath(
+    xprvBase58: masterKey,
+    path: hardenedPath,
+  );
+  print('Mnemonic from hardened path: $mnemonicFromHardenedPath');
+  print(
+    'Prefer deriveFromHardenedPath over deriveFromRawPath: ${mnemonicFromRawPath == mnemonicFromHardenedPath}',
+  );
 
-// ❌ Throws exception - missing quote
-try {
-  Bip85HardenedPath(path: "39'/0'/12'/0"); // Missing quote on last component
-} catch (e) {
-  print('Invalid path: $e');
+  // Hardened path validation example
+  print('\n🔒 Path Validation');
+  print('-' * 40);
+
+  try {
+    // This will throw an exception - non-hardened component
+    Bip85HardenedPath("39/0'/12'/0'");
+  } catch (e) {
+    print('Invalid path rejected: ${e.toString().split(':').last.trim()}');
+  }
+
+  try {
+    // This will throw an exception - missing single quote
+    Bip85HardenedPath("39'/0'/12'/0");
+  } catch (e) {
+    print('Invalid path rejected: ${e.toString().split(':').last.trim()}');
+  }
+
+  print(
+    '\n✅ Recommendation: Use deriveFromHardenedPath() for type-safe path validation!',
+  );
 }
 ```
 
@@ -181,5 +181,3 @@ try {
 - **🔒 BIP85 Compliance**: Ensures all components use hardened derivation (required by BIP85)
 - **⚡ Same Performance**: Identical output to `deriveFromRawPath` with zero overhead
 - **🐛 Early Error Detection**: Catches invalid paths before derivation attempts
-
-```

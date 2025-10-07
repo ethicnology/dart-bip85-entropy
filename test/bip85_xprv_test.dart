@@ -19,7 +19,7 @@ void main() {
     test('XPRV from full path', () {
       final xprvFromFullPath = Bip85Entropy.deriveFromRawPath(
         xprvBase58: TestValues.masterKey,
-        rawPath: "${Bip85Entropy.pathPrefix}/${application.number}'/$index'",
+        path: "${Bip85Entropy.pathPrefix}/${application.number}'/$index'",
       );
       expect(xprvFromFullPath, TestValues.xprv);
     });
@@ -27,7 +27,7 @@ void main() {
     test('XPRV from partial path', () {
       final xprvFromPartialPath = Bip85Entropy.deriveFromRawPath(
         xprvBase58: TestValues.masterKey,
-        rawPath: "${application.number}'/$index'",
+        path: "${application.number}'/$index'",
       );
       expect(xprvFromPartialPath, TestValues.xprv);
     });

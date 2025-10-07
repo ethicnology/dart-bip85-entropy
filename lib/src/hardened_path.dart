@@ -6,7 +6,7 @@ class Bip85HardenedPath {
   @override
   String toString() => _path;
 
-  Bip85HardenedPath({required String path}) {
+  Bip85HardenedPath(String path) {
     if (path.isEmpty) {
       throw Bip85Exception('Path cannot be empty');
     }

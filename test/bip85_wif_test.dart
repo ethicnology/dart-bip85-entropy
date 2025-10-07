@@ -19,7 +19,7 @@ void main() {
     test('WIF from full path', () {
       final wifFromFullPath = Bip85Entropy.deriveFromRawPath(
         xprvBase58: TestValues.masterKey,
-        rawPath: "${Bip85Entropy.pathPrefix}/${application.number}'/$index'",
+        path: "${Bip85Entropy.pathPrefix}/${application.number}'/$index'",
       );
       expect(wifFromFullPath, TestValues.wif);
     });
@@ -27,7 +27,7 @@ void main() {
     test('WIF from partial path', () {
       final wifFromPartialPath = Bip85Entropy.deriveFromRawPath(
         xprvBase58: TestValues.masterKey,
-        rawPath: "${application.number}'/$index'",
+        path: "${application.number}'/$index'",
       );
       expect(wifFromPartialPath, TestValues.wif);
     });

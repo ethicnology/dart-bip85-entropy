@@ -29,7 +29,7 @@ void main() {
     test('Mnemonic from full path', () {
       final mnemonicFromFullPath = Bip85Entropy.deriveFromRawPath(
         xprvBase58: TestValues.masterKey,
-        rawPath:
+        path:
             "${Bip85Entropy.pathPrefix}/${application.number}'/$languageCode'/$lengthCode'/$index'",
       );
       expect(mnemonicFromFullPath, TestValues.bip39_12words_mnemonic);
@@ -38,7 +38,7 @@ void main() {
     test('Mnemonic from partial path', () {
       final mnemonicFromPartialPath = Bip85Entropy.deriveFromRawPath(
         xprvBase58: TestValues.masterKey,
-        rawPath: "${application.number}'/$languageCode'/$lengthCode'/$index'",
+        path: "${application.number}'/$languageCode'/$lengthCode'/$index'",
       );
       expect(mnemonicFromPartialPath, TestValues.bip39_12words_mnemonic);
     });
