@@ -1,6 +1,6 @@
 name: bip85_entropy
 description: A pure Dart implementation of BIP85 - Deterministic Entropy
-version: 1.0.0
+version: 1.0.1
 repository: https://github.com/ethicnology/dart-bip85-entropy
 homepage: https://github.com/ethicnology/dart-bip85-entropy
 
